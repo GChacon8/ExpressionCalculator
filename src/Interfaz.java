@@ -141,7 +141,8 @@ public class Interfaz {
         calc.add(calcular);
         calcular.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Client.getInstancia().mandarOperacion(obtenerOperacion());
+                Mensaje mensaje = new Mensaje(obtenerOperacion(), 1, uuid.toString());
+                Client.getInstancia().mandarOperacion(mensaje);
             }
         });
 
@@ -160,7 +161,7 @@ public class Interfaz {
     }
 
     public String obtenerOperacion(){
-        return uuid+","+operacion.getText();
+        return operacion.getText();
     }
 
     private class ControlBtns implements ActionListener{ //clase para el comportamiento de los botones de la matriz

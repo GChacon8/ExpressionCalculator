@@ -1,5 +1,7 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 
 public class Client{
@@ -8,7 +10,7 @@ public class Client{
     final String HOST = "127.0.0.1";
     final int PUERTO = 5000;
     DataInputStream recibir;
-    DataOutputStream enviar;
+    ObjectOutputStream enviar;
     Socket socket;
     public static void main(String[] args) {
         
@@ -16,17 +18,17 @@ public class Client{
         
         }
 
-    public void mandarOperacion(String operacion){
+    public void mandarOperacion(Mensaje mensaje){
         try {
             socket = new Socket(HOST, PUERTO);
             recibir = new DataInputStream(socket.getInputStream());
-            enviar = new DataOutputStream(socket.getOutputStream());
+            enviar = new ObjectOutputStream(socket.getOutputStream());
 
-            enviar.writeUTF(operacion);
+            enviar.writeObject(mensaje);
 
-            String mensaje = recibir.readUTF();
+            String respuesta = recibir.readUTF();
 
-            System.out.println(mensaje);
+            System.out.println(respuesta);
 
             socket.close();
 

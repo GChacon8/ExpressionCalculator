@@ -1,5 +1,7 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -7,7 +9,7 @@ public class Server {
     public static void main(String[] args) {
         ServerSocket servidor;
         Socket socket;
-        DataInputStream recibir;
+        ObjectInputStream recibir;
         DataOutputStream enviar;
 
         final int PUERTO = 5000;
@@ -20,19 +22,19 @@ public class Server {
                 socket = servidor.accept();
                 System.out.println("Cliente conectado");
 
-                recibir = new DataInputStream(socket.getInputStream());
+                recibir = new ObjectInputStream(socket.getInputStream());
                 enviar = new DataOutputStream(socket.getOutputStream());
 
-                String mensaje = recibir.readUTF();
+                Mensaje mensaje = (Mensaje) recibir.readObject();
 
-                System.out.println(mensaje);
+                System.out.println(mensaje.toString());
 
-                enviar.writeUTF("Me mandaste esto:"+ mensaje);
+                enviar.writeUTF("Me mandaste esto:"+ mensaje.toString());
 
                 socket.close();
                 System.out.println("Cliente desconectado");
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
             System.out.println("Fallo");
         }
 
