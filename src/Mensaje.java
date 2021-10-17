@@ -25,7 +25,7 @@ public class Mensaje implements Serializable{
     }
 
     public String toString(){
-        return expresion+","+tipo+","+identificador;
+        return expresion + " , " + tipo + " , " + identificador;
     }
 
 }

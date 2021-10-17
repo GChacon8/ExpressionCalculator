@@ -19,6 +19,8 @@ public class Client{
         }
 
     public void mandarOperacion(Mensaje mensaje){
+        String respuesta;
+
         try {
             socket = new Socket(HOST, PUERTO);
             recibir = new DataInputStream(socket.getInputStream());
@@ -26,12 +28,14 @@ public class Client{
 
             enviar.writeObject(mensaje);
 
-            String respuesta = recibir.readUTF();
+            respuesta = recibir.readUTF();
 
             System.out.println(respuesta);
 
-            socket.close();
+            ventana.setTextResult(respuesta);
 
+            socket.close();
+            ventana.setTextResult(respuesta);
         } 
         catch (Exception e) {
             System.out.println("fallo");

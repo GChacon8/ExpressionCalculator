@@ -5,9 +5,10 @@ import java.util.UUID;
 
 public class Interfaz {
     JFrame calc, hist;
-    JButton calcular, historial, suma, resta, mult, div, perc;
+    JButton calcular, historial, suma, resta, mult, div, perc, abrirParent, cerrarParent;
     JButton[][] digitos;
     JTextField operacion;
+    JLabel result;
     int filas = 5;
     int columns = 4;
     UUID uuid;
@@ -17,6 +18,10 @@ public class Interfaz {
         calcFrame();
     }
 
+    public void setTextResult(String res){
+        result.setText("RESULTADO:  " + res);
+    }
+
     public void calcFrame(){
         int cont = 1;
         int x = 10;
@@ -24,7 +29,7 @@ public class Interfaz {
 
         calc = new JFrame();
         calc.setBackground(Color.CYAN);
-        calc.setSize(440, 700);
+        calc.setSize(540, 700);
         calc.getContentPane().setBackground(Color.BLACK);
         calc.setTitle("CASIO Poderosa - HL310");
         calc.setLocationRelativeTo(null);
@@ -34,10 +39,16 @@ public class Interfaz {
         calc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         operacion = new JTextField();
-        operacion.setBounds(10, 30, 400, 70);
+        operacion.setBounds(10, 30, 400, 50);
         operacion.setHorizontalAlignment(JTextField.RIGHT);
         operacion.setFont(new Font("Arial", Font.BOLD, 28));
         calc.add(operacion);
+
+        result = new JLabel("RESULTADO: ");
+        result.setBounds(10, 90, 440, 50);
+        result.setFont(new Font("Arial", Font.BOLD, 28));
+        result.setForeground(Color.GREEN);
+        calc.add(result);
 
         digitos = new JButton[filas][columns];
 
@@ -78,6 +89,28 @@ public class Interfaz {
         }
 
         //Fuera del for, se definen los botones "operadores" y su respectivo comportamiento
+        abrirParent = new JButton("(");
+        abrirParent.setBackground(Color.GREEN);
+        abrirParent.setBounds(410,150,100, 250);
+        abrirParent.setFont(new Font("Arial", Font.BOLD, 28));
+        calc.add(abrirParent);
+        abrirParent.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                operacion.setText(operacion.getText() + "(");
+            }
+        });
+
+        cerrarParent = new JButton(")");
+        cerrarParent.setBackground(Color.GREEN);
+        cerrarParent.setBounds(410,400,100, 250);
+        cerrarParent.setFont(new Font("Arial", Font.BOLD, 28));
+        calc.add(cerrarParent);
+        cerrarParent.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                operacion.setText(operacion.getText() + ")");
+            }
+        });
+
         suma = new JButton("+");
         suma.setBackground(Color.GREEN);
         suma.setBounds(310,150,100,100);
@@ -118,7 +151,7 @@ public class Interfaz {
         calc.add(div);
         div.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                operacion.setText(operacion.getText() + "*");
+                operacion.setText(operacion.getText() + "/");
             }
         });
 
@@ -175,8 +208,10 @@ public class Interfaz {
 
                         if(digitos[i][j].getText().equals("C")){
                             operacion.setText("");
-                        }else if(digitos[i][j].getText().equals("E")){
-                            operacion.setText("Esto borraría un elemento");
+                        }else if(digitos[i][j].getText().equals("E") && operacion.getText().length() != 0){
+                            String str = operacion.getText();
+                            str = str.substring(0, str.length() - 1);
+                            operacion.setText(str);
                         }else{
                             operacion.setText(operacion.getText() + digitos[i][j].getText()); // añade números en el JTextField
                         }
