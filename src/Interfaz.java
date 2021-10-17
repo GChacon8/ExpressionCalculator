@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.UUID;
 
 public class Interfaz {
     JFrame calc, hist;
@@ -9,8 +10,10 @@ public class Interfaz {
     JTextField operacion;
     int filas = 5;
     int columns = 4;
+    UUID uuid;
 
     public Interfaz(){
+        uuid = UUID.randomUUID();
         calcFrame();
     }
 
@@ -138,7 +141,7 @@ public class Interfaz {
         calc.add(calcular);
         calcular.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Aquí se involucrarían los Sockets y el árbol. Ver línea 141 de la clase Interfaz");
+                Client.getInstancia().mandarOperacion(obtenerOperacion());
             }
         });
 
@@ -154,6 +157,10 @@ public class Interfaz {
         });
 
         SwingUtilities.updateComponentTreeUI(calc);
+    }
+
+    public String obtenerOperacion(){
+        return uuid+","+operacion.getText();
     }
 
     private class ControlBtns implements ActionListener{ //clase para el comportamiento de los botones de la matriz

@@ -24,9 +24,10 @@ public class Server {
                 enviar = new DataOutputStream(socket.getOutputStream());
 
                 String mensaje = recibir.readUTF();
+
                 System.out.println(mensaje);
 
-                enviar.writeUTF("Mensaje desde el Server");
+                enviar.writeUTF("Me mandaste esto:"+ mensaje);
 
                 socket.close();
                 System.out.println("Cliente desconectado");
