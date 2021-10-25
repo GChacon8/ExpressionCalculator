@@ -13,5 +13,23 @@ public class ExpTree {
         Node newTreeNode = known;
     }
 
-    public void display(){}
+    public void display(Node node){
+        String str = "";
+
+        if (node.getLeft() == null){
+            str += ".";
+        }else{
+            str += node.getLeft().getData();
+        }
+
+        str += " <- " + node.getData() + " -> ";
+
+        if(node.getRight() == null){
+            str += ".";
+        }else{
+            str += node.getRight().getData();
+        }
+        display(node.getLeft());
+        display(node.getRight());
+    }
 }

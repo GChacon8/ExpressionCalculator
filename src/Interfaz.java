@@ -4,14 +4,14 @@ import java.awt.event.*;
 import java.util.UUID;
 
 public class Interfaz {
-    JFrame calc, hist;
-    JButton calcular, historial, suma, resta, mult, div, perc, abrirParent, cerrarParent;
-    JButton[][] digitos;
-    JTextField operacion;
-    JLabel result;
-    int filas = 5;
-    int columns = 4;
-    UUID uuid;
+    private JFrame calc, hist;
+    private JButton calcular, historial, suma, resta, mult, div, perc, abrirParent, cerrarParent;
+    private JButton[][] digitos;
+    private JTextField operacion;
+    private JLabel result;
+    private int filas = 5;
+    private int columns = 4;
+    private UUID uuid;
 
     public Interfaz(){
         uuid = UUID.randomUUID();

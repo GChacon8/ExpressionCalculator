@@ -1,8 +1,8 @@
 public class Node {
-    public Object data;
-    public Node next;
-    public Node right;
-    public Node left;
+    private Object data;
+    private Node next;
+    private Node right;
+    private Node left;
 
     public Node(Object data) {
         this.next = null;

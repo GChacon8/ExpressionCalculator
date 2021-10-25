@@ -1,21 +1,19 @@
+import javax.swing.*;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
 import java.net.Socket;
 
 public class Client{
-    static Interfaz ventana;
+    private static Interfaz ventana;
     private static Client instancia = null;
-    final String HOST = "127.0.0.1";
-    final int PUERTO = 5000;
-    DataInputStream recibir;
-    ObjectOutputStream enviar;
-    Socket socket;
+    private final String HOST = "127.0.0.1";
+    private final int PUERTO = 5000;
+    private DataInputStream recibir;
+    private ObjectOutputStream enviar;
+    private Socket socket;
+
     public static void main(String[] args) {
-        
         ventana = new Interfaz();
-        
         }
 
     public void mandarOperacion(Mensaje mensaje){
@@ -38,7 +36,7 @@ public class Client{
             ventana.setTextResult(respuesta);
         } 
         catch (Exception e) {
-            System.out.println("fallo");
+             JOptionPane.showMessageDialog(null, "¡Escribiste mal la expresión!");
         }
     }
     public static Client getInstancia(){

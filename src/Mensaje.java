@@ -2,9 +2,9 @@ import java.io.Serializable;
 
 public class Mensaje implements Serializable{
 
-    String expresion;
-    int tipo;
-    String identificador;
+    private String expresion;
+    private int tipo;
+    private String identificador;
 
     public Mensaje (String expresion, int tipo, String identificador){
         this.expresion = expresion;
