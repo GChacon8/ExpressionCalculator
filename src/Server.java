@@ -272,9 +272,9 @@ public class Server {
             StringBuilder sb = new StringBuilder();
             while((line = reader.readLine()) != null){
                 String[] splitLine = line.split(",");
-                //if(splitLine[0].equals(ID)){
+                if(splitLine[0].equals(ID)){
                     sb.append(splitLine[1]).append("\t").append(splitLine[2]).append("\t").append(splitLine[3]).append("\n\n");
-                //}
+                }
             }
             lines = sb.toString();
         } catch (Exception e) {
