@@ -16,8 +16,8 @@ public class Client{
         ventana = new Interfaz();
         }
 
-    public void mandarOperacion(Mensaje mensaje){
-        String respuesta;
+    public String mandarOperacion(Mensaje mensaje){
+        String respuesta = "";
 
         try {
             socket = new Socket(HOST, PUERTO);
@@ -30,14 +30,12 @@ public class Client{
 
             System.out.println(respuesta);
 
-            ventana.setTextResult(respuesta);
-
             socket.close();
-            ventana.setTextResult(respuesta);
         } 
         catch (Exception e) {
              JOptionPane.showMessageDialog(null, "¡Escribiste mal la expresión!");
         }
+        return respuesta;
     }
     public static Client getInstancia(){
         if (instancia == null){

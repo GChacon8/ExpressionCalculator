@@ -175,7 +175,8 @@ public class Interfaz {
         calcular.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Mensaje mensaje = new Mensaje(obtenerOperacion(), 1, uuid.toString());
-                Client.getInstancia().mandarOperacion(mensaje);
+                String respuesta = Client.getInstancia().mandarOperacion(mensaje);
+                setTextResult(respuesta);
             }
         });
 
@@ -223,13 +224,22 @@ public class Interfaz {
     public void histFrame(){ // función para crear la ventana del historial
         hist = new JFrame();
         hist.setBackground(Color.CYAN);
-        hist.setSize(440, 700);
-        hist.getContentPane().setBackground(Color.BLACK);
+        hist.setSize(700, 800);
+        hist.getContentPane().setBackground(Color.WHITE);
         hist.setTitle("HISTORIAL");
         hist.setLocationRelativeTo(null);
         hist.setResizable(false);
         hist.setLayout(null);
         hist.setVisible(true);
+        JTextArea historial = new JTextArea();
+        historial.setEditable(false);
+        JScrollPane scroll = new JScrollPane (historial, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setBounds(50, 50, 600, 600);
+        hist.add(scroll);
         hist.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        Mensaje mensaje = new Mensaje("", 2, uuid.toString());
+        String respuesta = Client.getInstancia().mandarOperacion(mensaje);
+        String titular = "Expresion\tResultado\tFecha\n\n";
+        historial.setText(titular+respuesta);
     }
 }

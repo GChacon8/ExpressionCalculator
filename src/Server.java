@@ -1,8 +1,13 @@
-import org.jetbrains.annotations.NotNull;
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.io.File;
+import java.util.Date;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.text.SimpleDateFormat;
 
 public class Server {
     public static void main(String[] args) {
@@ -20,19 +25,25 @@ public class Server {
             while(true){
                 socket = servidor.accept();
                 System.out.println("Cliente conectado");
-
                 recibir = new ObjectInputStream(socket.getInputStream());
                 enviar = new DataOutputStream(socket.getOutputStream());
-
                 Mensaje mensaje = (Mensaje) recibir.readObject();
-
-                System.out.println(mensaje.toString());
-
+                String ID = mensaje.getIdentificador();
                 String operacion = mensaje.getExpresion();
-                int result = calcPostFix(operacion);
-                enviar.writeUTF(String.valueOf(result));
-
-
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+                Date date = new Date();  
+                String fecha = formatter.format(date).toString();
+                System.out.println(mensaje.toString());
+                String result = "";
+                if(mensaje.getTipo() == 1){
+                    result = String.valueOf(calcPostFix(operacion));
+                    registrar(ID, operacion, result, fecha);
+                }
+                else if(mensaje.getTipo() == 2){
+                    result = leerArchivo(".\\Historial.csv", ID);
+                }
+                enviar.writeUTF(result);
+                
                 socket.close();
                 System.out.println("Cliente desconectado");
             }
@@ -43,7 +54,7 @@ public class Server {
     }
 
     // convierte la expresión normal a postfix
-    public static @NotNull LinkedList inToPost(@NotNull String exp){
+    public static LinkedList inToPost(String exp){
         int len = exp.length();
         String symbol;
         String previous = "";
@@ -245,6 +256,41 @@ public class Server {
             display(node.getRight(), depth);
         }
 
+    }
+
+    public static void registrar(String ID, String expresion, String resultado, String fecha){
+        StringBuilder sb = new StringBuilder();
+        sb.append(ID).append(",").append(expresion).append(",").append(resultado).append(",").append(fecha).append("\n");
+        appendArchivo(".\\Historial.csv", sb.toString());
+    }
+    public static String leerArchivo(String archivo, String ID){
+        BufferedReader reader = null;
+        String line = "";
+        String lines = "";
+        try {
+            reader = new BufferedReader(new FileReader(archivo));
+            StringBuilder sb = new StringBuilder();
+            while((line = reader.readLine()) != null){
+                String[] splitLine = line.split(",");
+                //if(splitLine[0].equals(ID)){
+                    sb.append(splitLine[1]).append("\t").append(splitLine[2]).append("\t").append(splitLine[3]).append("\n\n");
+                //}
+            }
+            lines = sb.toString();
+        } catch (Exception e) {
+            System.out.println("Error leyendo archivo");
+        }
+        return lines;
+    }
+
+    public static void appendArchivo(String archivo, String line){
+        try {
+            FileWriter fw = new FileWriter(new File(archivo), true);
+            fw.write(line);
+            fw.close();
+        } catch (Exception e) {
+            System.out.println("Error de registro");
+        }
     }
 }
 
