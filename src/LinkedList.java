@@ -1,11 +1,9 @@
 public class LinkedList {
     private Node head;
-    private Node last;
     private int size;
 
     public LinkedList(){
         this.head = null;
-        this.last = null;
         this.size = 0;
     }
 
@@ -36,7 +34,6 @@ public class LinkedList {
             }
 
             deleted = current.getNext();
-            System.out.println("Deleted" + deleted.getData());
             current.setNext(null);
 
             this.size--;
@@ -71,22 +68,5 @@ public class LinkedList {
             cont++;
         }
         return (String) current.getData();
-    }
-
-    public String display(){
-        String expPF = "";
-        Node current = this.head;
-        int cont = 0;
-        int len = getSize();
-
-        while(current != null && cont < size){
-            if(cont >= 1){
-                expPF += " -> ";
-            }
-            expPF += current.getData();
-            current = current.getNext();
-            cont++;
-        }
-        return expPF;
     }
 }

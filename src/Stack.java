@@ -32,20 +32,4 @@ public class Stack {
     public int getSize(){
         return this.size;
     }
-
-    public boolean isEmpty(){ // verifies if the list is empty
-        return this.head == null;
-    }
-
-    public String nodeAt(int position){
-        int len = this.getSize();
-        Node current = this.head;
-        int cont = 0;
-
-        while(current != null && cont < position){
-            current = current.getNext();
-            cont++;
-        }
-        return (String) current.getData();
-    }
 }

@@ -37,6 +37,7 @@ public class Client{
         }
         return respuesta;
     }
+
     public static Client getInstancia(){
         if (instancia == null){
             instancia = new Client();

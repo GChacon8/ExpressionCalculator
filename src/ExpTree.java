@@ -1,35 +1,118 @@
-public class ExpTree {
-    private Node root;
+import java.util.Stack;
+
+public class ExpTree extends Server{
+    Stack stack;
+    Node root, right, left;
 
     public ExpTree(){
-        this.root = null;
+        stack = null;
+        this.root = this.right = this.left = null;
     }
 
-    public void insert(Object data){
-        Node newTreeNode = new Node(data);
+    public Node buildTree(LinkedList postFixed){
+        Stack<Node> stack = new Stack<Node>();
+        int len = postFixed.getSize();
+        String symbol;
+
+        for(int i=0; i<len; i++){
+            symbol = postFixed.nodeAt(i);
+
+            if(!isOperator(symbol)){
+                root = new Node(symbol);
+                stack.push(root);
+            }else{
+                root = new Node(symbol);
+
+                if(len>1){
+                    right = stack.pop();
+
+                    root.setRight(right);
+
+                    left = stack.pop();
+                    root.setLeft(left);
+                }
+
+
+                stack.push(root);
+            }
+        }
+        root = (Node) stack.peek();
+        stack.pop();
+        System.out.println("");
+        System.out.println("El árbol de expresión es:");
+        //this.display(root);
+        System.out.println("");
+        return root;
+
+
+
     }
 
-    public void insertNode(Node known){
-        Node newTreeNode = known;
-    }
-
-    public void display(Node node){
-        String str = "";
-
-        if (node.getLeft() == null){
-            str += ".";
-        }else{
-            str += node.getLeft().getData();
+    public void printPostFix(Node node) {
+        if (node == null) {
+            return;
         }
 
-        str += " <- " + node.getData() + " -> ";
+        // first recur on left subtree
+        printPostFix(node.getLeft());
 
-        if(node.getRight() == null){
-            str += ".";
+        // then recur on right subtree
+        printPostFix(node.getRight());
+
+        // now deal with the node
+        System.out.print(node.getData() + " ");
+
+    }
+
+    private int toInt(String str) {
+        int num = 0;
+
+        for(int i = 0; i < str.length(); i++)
+            num = num * 10 + ((int)str.charAt(i) - 48);
+
+        return num;
+    }
+
+    public int evalTree(Node root) {
+        double aux;
+        int resultado = 0;
+
+        // Empty tree
+        if (root == null)
+            return 0;
+
+        // Leaf node is an integer
+        if (root.getLeft() == null && root.getRight() == null)
+            return toInt((String) root.getData());
+
+        // Evaluate left subtree
+        int leftEval = evalTree(root.getLeft());
+
+        // Evaluate right subtree
+        int rightEval = evalTree(root.getRight());
+
+        // Check which operator to apply
+        if (root.getData().equals("+")){
+            resultado = leftEval + rightEval;
+
+        }else if (root.getData().equals("-")){
+            resultado = leftEval - rightEval;
+
+        } else if (root.getData().equals("*")){
+            resultado = leftEval * rightEval;
+
+        } else if (root.getData().equals("%")){
+            aux = ((double) leftEval/100) * rightEval;
+            resultado = (int) aux;
+
+        } else if (root.getData().equals("/")){
+            resultado = leftEval/rightEval;
+
         }else{
-            str += node.getRight().getData();
+            resultado = -1; // en caso de haber escrito un símbolo sin sentido
         }
-        display(node.getLeft());
-        display(node.getRight());
+
+
+        return resultado;
     }
 }

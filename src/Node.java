@@ -6,16 +6,12 @@ public class Node {
 
     public Node(Object data) {
         this.next = null;
-        this.left = null;
-        this.right = null;
         this.data = data;
+        this.right = null;
+        this.left = null;
     }
 
     public Object getData() {return this.data;}
-
-    public void setData(int data) {
-        this.data = data;
-    }
 
     public Node getNext() {
         return this.next;
@@ -40,4 +36,5 @@ public class Node {
     public void setLeft(Node treenode) {
         this.left = treenode;
     }
+
 }

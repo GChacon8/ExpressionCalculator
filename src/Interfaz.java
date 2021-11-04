@@ -198,6 +198,8 @@ public class Interfaz {
         return operacion.getText();
     }
 
+
+    // CLASE INTERNA
     private class ControlBtns implements ActionListener{ //clase para el comportamiento de los botones de la matriz
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -221,22 +223,25 @@ public class Interfaz {
             }
         }
     }
+
     public void histFrame(){ // función para crear la ventana del historial
         hist = new JFrame();
         hist.setBackground(Color.CYAN);
-        hist.setSize(700, 800);
+        hist.setSize(700, 700);
         hist.getContentPane().setBackground(Color.WHITE);
         hist.setTitle("HISTORIAL");
         hist.setLocationRelativeTo(null);
         hist.setResizable(false);
         hist.setLayout(null);
         hist.setVisible(true);
+
         JTextArea historial = new JTextArea();
         historial.setEditable(false);
         JScrollPane scroll = new JScrollPane (historial, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scroll.setBounds(50, 50, 600, 600);
         hist.add(scroll);
         hist.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
         Mensaje mensaje = new Mensaje("", 2, uuid.toString());
         String respuesta = Client.getInstancia().mandarOperacion(mensaje);
         String titular = "Expresion\tResultado\tFecha\n\n";
