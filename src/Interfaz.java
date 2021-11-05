@@ -5,8 +5,8 @@ import java.util.UUID;
 
 /**
  * Se implementa toda la interfaz de la calculadora con ActionListeners importantes.
- * @author Jimena León Huertas
- * @author Gabriel Chacón Alfaro
+ * @author Jimena Leon Huertas
+ * @author Gabriel Chacon Alfaro
  */
 public class Interfaz {
     private JFrame calc, hist;
@@ -27,8 +27,8 @@ public class Interfaz {
     }
 
     /**
-     * Muestra el parametro como un String en la seccion de resultado
-     * @param res
+     * Muestra el resultado como un String en la sección de resultado
+     * @param res Recibe el nuevo resultado (string)
      */
     public void setTextResult(String res){
         result.setText("RESULTADO:  " + res);
@@ -181,7 +181,7 @@ public class Interfaz {
             }
         });
 
-        //ESTA ES LA SECCIÓN MÁS IMPORTANTE!!!!!!!
+
         calcular = new JButton("=");
         calcular.setBackground(Color.WHITE);
         calcular.setBounds(210,550,100,100);
@@ -209,12 +209,19 @@ public class Interfaz {
         SwingUtilities.updateComponentTreeUI(calc);
     }
 
+
+    /**
+     * Devuelve la operacion escrita en el campo de texto en la interfaz
+     * @return Retorna la expresión matemática (string) escrita en el campo de texto de la interfaz de la calculadora
+     */
     public String obtenerOperacion(){
         return operacion.getText();
     }
 
 
-    // CLASE INTERNA
+    /**
+     * Clase interna en el Servidor para darle funcionalidad a partir de un evento a los botones numéricos en la interfaz de la calculadora
+     */
     private class ControlBtns implements ActionListener{ //clase para el comportamiento de los botones de la matriz
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -238,6 +245,7 @@ public class Interfaz {
             }
         }
     }
+
 
     /**
      * General el frame de la ventana del historial con los datos respectivos

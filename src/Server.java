@@ -12,12 +12,16 @@ import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 
 /**
- * Devuelve las respuestas o el historial al cliente y registra las solicitudes. 
- * 
- * @author Gabriel Chacón Alfaro
- * @author Jimena León Huertas
+ * Devuelve las respuestas o el historial al cliente y registra las solicitudes.
+ * @author Gabriel Chacon Alfaro
+ * @author Jimena Leon Huertas
  */
 public class Server {
+
+    /**
+     * Inicializa la clase del Servidor y define los canales de comunicación por Socket para recibir y enviar datos a los Clientes
+     * @param args Un array de valores tipo String
+     */
     public static void main(String[] args) {
         ServerSocket servidor;
         Socket socket;
@@ -65,7 +69,11 @@ public class Server {
 
     }
 
-    // convierte la expresión normal a postfix
+    /**
+     * Convierte la expresión ingresada por el usuario a la notación PostFix
+     * @param exp Recibe la expresión matemática (string) ingresada en el campo de texto de la interfaz de la calculadora, recibida previamente por Sockets
+     * @return Retorna una lista enlazada simple que contendrá cada elemento de la notación PostFix
+     */
     public static LinkedList inToPost(String exp){
         int len = exp.length();
         String symbol;
@@ -123,6 +131,12 @@ public class Server {
         return postFixed;
     }
 
+
+    /**
+     * Inicializa un árbol binario de expresión e invoca sus métodos para obtener el resultado de la operación.
+     * @param exp Recibe la expresión matemática (string) ingresada en el campo de texto de la interfaz de la calculadora, recibida previamente por Sockets
+     * @return Retorna el resultado (int) de la operación ingresada por el usuario
+     */
     public static int calcResult(String exp){
         int result;
         try{
@@ -152,6 +166,11 @@ public class Server {
         return result;
     }
 
+    /**
+     * Indica si el string ingresado es un número o no.
+     * @param str Recibe un string que puede o no ser un número.
+     * @return Retorna un booleano indicando si es verdadero que el string recibido es un número o no.
+     */
     public static boolean isDigit(String str){
         boolean digit = false;
 
@@ -164,6 +183,11 @@ public class Server {
         return digit;
     }
 
+    /**
+     * Indica si el string ingresado es o no un operador (+, - , *, / , %).
+     * @param str Recibe un string que puede o no ser un operador (+, - , *, / , %)
+     * @return Retorna un booleano indicando si es verdadero que el string recibido es o no un operador (+, - , *, / , %)
+     */
     public static boolean isOperator(String str){
         boolean operator = false;
         if(str.equals("+") || str.equals("-") || str.equals("*") || str.equals("/") || str.equals("%")){
@@ -173,11 +197,11 @@ public class Server {
     }
 
     /**
-     * Registra la solicitud del cliente en el archivo .csv
-     * @param ID
-     * @param expresion
-     * @param resultado
-     * @param fecha
+     * Registra la solicitud del cliente en un archivo .csv
+     * @param ID El identificador del Cliente específico
+     * @param expresion La expresión matemática (string) ingresada por el Cliente
+     * @param resultado El resultado (int) de la expresión ingresada por el Cliente
+     * @param fecha La fecha (string) en la cual el Cliente ingresó la expresión
      */
     public static void registrar(String ID, String expresion, String resultado, String fecha){
         StringBuilder sb = new StringBuilder();
@@ -186,9 +210,9 @@ public class Server {
     }
 
     /**
-     * Lee el archivo, separa los elementos y genera un string excluyendo el ID.
-     * @param archivo
-     * @param ID
+     * Lee el archivo .csv anteriormente creado, separa los elementos y genera un string excluyendo el ID.
+     * @param archivo  El archivo (string) por leer
+     * @param ID El identificador del Cliente específico
      * @return Retorna un string con la operacion, resultado y fecha separados.
      */
     public static String leerArchivo(String archivo, String ID){
@@ -198,7 +222,9 @@ public class Server {
         try {
             reader = new BufferedReader(new FileReader(archivo));
             StringBuilder sb = new StringBuilder();
+
             while((line = reader.readLine()) != null){
+
                 String[] splitLine = line.split(",");
                 if(splitLine[0].equals(ID)){
                     sb.append(splitLine[1]).append("\t").append(splitLine[2]).append("\t").append(splitLine[3]).append("\n\n");
@@ -213,8 +239,8 @@ public class Server {
 
     /**
      * Agrega la nueva linea de datos de solicitud en el .csv
-     * @param archivo
-     * @param line
+     * @param archivo El archivo (string) por leer
+     * @param line Un string que irá aumentando su largo con cada append
      */
     public static void appendArchivo(String archivo, String line){
         try {

@@ -1,14 +1,26 @@
 import java.util.Stack;
 
+/**
+ * Árbol binario de expresión utilizado para calcular el resultado de la expresión matemática ingresada en la calculadora
+ * @author Jimena Leon Huertas
+ */
 public class ExpTree extends Server{
     Stack stack;
     Node root, right, left;
 
+    /**
+     * Inicializa una instancia de la clase con sus atributos nulos
+     */
     public ExpTree(){
         stack = null;
         this.root = this.right = this.left = null;
     }
 
+    /**
+     * Construye el árbol nodo a nodo utilizando un Stack
+     * @param postFixed Recibe la lista que contiene la expresión matemática en notación postFix
+     * @return Retorna el root del árbol, el cual estará relacionado con los hijos
+     */
     public Node buildTree(LinkedList postFixed){
         Stack<Node> stack = new Stack<Node>();
         int len = postFixed.getSize();
@@ -40,30 +52,36 @@ public class ExpTree extends Server{
         stack.pop();
         System.out.println("");
         System.out.println("El árbol de expresión es:");
-        //this.display(root);
-        System.out.println("");
+
         return root;
-
-
-
     }
 
+
+    /**
+     * Recorre recursivamente el árbol e imprime en consola sus nodos en notación postFix
+     * @param node Recibe el root para empezar a recorrer el árbol
+     */
     public void printPostFix(Node node) {
         if (node == null) {
             return;
         }
 
-        // first recur on left subtree
+        // recorre subárbol izquierdo
         printPostFix(node.getLeft());
 
-        // then recur on right subtree
+        // recorre subárbol derecho
         printPostFix(node.getRight());
 
-        // now deal with the node
+        // muestra el contenido del nodo
         System.out.print(node.getData() + " ");
 
     }
 
+    /**
+     * Convierte los nodos numéricos del árbol en su notación numérica normal
+     * @param str El contenido del nodo por convertir
+     * @return Retorna el número ya construido
+     */
     private int toInt(String str) {
         int num = 0;
 
@@ -73,25 +91,30 @@ public class ExpTree extends Server{
         return num;
     }
 
+    /**
+     * Evalúa recursivamente el árbol para calcular el resultado de la expresión matemática contenida en él.
+     * @param root Recibe el root del árbol para empezar a recorrerlo recursivamente
+     * @return Retorna el resultado final de la expresión conformada por todos sus nodos
+     */
     public int evalTree(Node root) {
         double aux;
         int resultado = 0;
 
-        // Empty tree
+        // Arbol vacio
         if (root == null)
             return 0;
 
-        // Leaf node is an integer
+        // Cuando el nodo es un numero
         if (root.getLeft() == null && root.getRight() == null)
             return toInt((String) root.getData());
 
-        // Evaluate left subtree
+        // Evalua el subarbol izquierdo
         int leftEval = evalTree(root.getLeft());
 
-        // Evaluate right subtree
+        // Evalua el subarbol derecho
         int rightEval = evalTree(root.getRight());
 
-        // Check which operator to apply
+        // Aplica un operador dependiendo del caso y obtiene el resultado de esa operacion
         if (root.getData().equals("+")){
             resultado = leftEval + rightEval;
 

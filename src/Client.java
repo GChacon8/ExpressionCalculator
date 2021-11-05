@@ -4,10 +4,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
- * Solicita la respuesta de una expresion o el historial al servidor
- * 
- * @author Gabriel Chacón Alfaro
- * @author Jimena León Huertas
+ * Solicita la respuesta de una expresión o el historial al servidor
+ * @author Gabriel Chacon Alfaro
+ * @author Jimena Leon Huertas
  */
 public class Client{
     private static Interfaz ventana;
@@ -18,14 +17,18 @@ public class Client{
     private ObjectOutputStream enviar;
     private Socket socket;
 
+    /**
+     * Inicializa la clase del Cliente e invoca la clase "interfaz" para crear la interfaz de la calculadora
+     * @param args Un array de valores tipo String
+     */
     public static void main(String[] args) {
         ventana = new Interfaz();
         }
 
     /**
      * Comunica al cliente con el servidor para hacer una solicitud y posteriormente recibir el resultado o historial.
-     * @param mensaje
-     * @return Retorna ya sea la respuesta del la operacion o el historial solicitado.
+     * @param mensaje Recibe el objeto mensaje que se desea enviar.
+     * @return Retorna ya sea la respuesta de la operación o el historial solicitado contenido en el objeto mensaje.
      */
     public String mandarOperacion(Mensaje mensaje){
         String respuesta = "";
