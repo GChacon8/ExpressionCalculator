@@ -11,6 +11,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 
+/**
+ * Devuelve las respuestas o el historial al cliente y registra las solicitudes. 
+ * 
+ * @author Gabriel Chacón Alfaro
+ * @author Jimena León Huertas
+ */
 public class Server {
     public static void main(String[] args) {
         ServerSocket servidor;
@@ -166,12 +172,25 @@ public class Server {
         return operator;
     }
 
+    /**
+     * Registra la solicitud del cliente en el archivo .csv
+     * @param ID
+     * @param expresion
+     * @param resultado
+     * @param fecha
+     */
     public static void registrar(String ID, String expresion, String resultado, String fecha){
         StringBuilder sb = new StringBuilder();
         sb.append(ID).append(",").append(expresion).append(",").append(resultado).append(",").append(fecha).append("\n");
         appendArchivo(".\\Historial.csv", sb.toString());
     }
 
+    /**
+     * Lee el archivo, separa los elementos y genera un string excluyendo el ID.
+     * @param archivo
+     * @param ID
+     * @return Retorna un string con la operacion, resultado y fecha separados.
+     */
     public static String leerArchivo(String archivo, String ID){
         BufferedReader reader = null;
         String line = "";
@@ -192,6 +211,11 @@ public class Server {
         return lines;
     }
 
+    /**
+     * Agrega la nueva linea de datos de solicitud en el .csv
+     * @param archivo
+     * @param line
+     */
     public static void appendArchivo(String archivo, String line){
         try {
             FileWriter fw = new FileWriter(new File(archivo), true);

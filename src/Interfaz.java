@@ -3,6 +3,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.UUID;
 
+/**
+ * Se implementa toda la interfaz de la calculadora con ActionListeners importantes.
+ * @author Jimena León Huertas
+ * @author Gabriel Chacón Alfaro
+ */
 public class Interfaz {
     private JFrame calc, hist;
     private JButton calcular, historial, suma, resta, mult, div, perc, abrirParent, cerrarParent;
@@ -13,15 +18,25 @@ public class Interfaz {
     private int columns = 4;
     private UUID uuid;
 
+    /**
+     * Se le asigna el identificador a la interfaz y se crea la interfaz en si
+     */
     public Interfaz(){
         uuid = UUID.randomUUID();
         calcFrame();
     }
 
+    /**
+     * Muestra el parametro como un String en la seccion de resultado
+     * @param res
+     */
     public void setTextResult(String res){
         result.setText("RESULTADO:  " + res);
     }
 
+    /**
+     * Genera toda la interfaz (parte visual) de lo que seria la calculadora
+     */
     public void calcFrame(){
         int cont = 1;
         int x = 10;
@@ -224,6 +239,9 @@ public class Interfaz {
         }
     }
 
+    /**
+     * General el frame de la ventana del historial con los datos respectivos
+     */
     public void histFrame(){ // función para crear la ventana del historial
         hist = new JFrame();
         hist.setBackground(Color.CYAN);
