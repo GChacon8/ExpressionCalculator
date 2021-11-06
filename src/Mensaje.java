@@ -7,7 +7,8 @@ import java.io.Serializable;
  */
 public class Mensaje implements Serializable{
 
-    private String expresion, identificador;
+    private String expresion;
+    private String identificador;
     private int tipo;
 
     /**

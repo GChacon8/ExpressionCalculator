@@ -25,7 +25,7 @@ public class Server {
     public static void main(String[] args) {
         ServerSocket servidor;
         Socket socket;
-        ObjectInputStream recibir;
+        ObjectInputStream recibir; 
         DataOutputStream enviar;
 
         final int PUERTO = 5000;

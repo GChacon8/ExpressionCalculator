@@ -5,14 +5,12 @@ import java.util.Stack;
  * @author Jimena Leon Huertas
  */
 public class ExpTree extends Server{
-    Stack stack;
     Node root, right, left;
 
     /**
      * Inicializa una instancia de la clase con sus atributos nulos
      */
     public ExpTree(){
-        stack = null;
         this.root = this.right = this.left = null;
     }
 
@@ -43,8 +41,6 @@ public class ExpTree extends Server{
                     left = stack.pop();
                     root.setLeft(left);
                 }
-
-
                 stack.push(root);
             }
         }

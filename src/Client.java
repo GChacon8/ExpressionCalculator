@@ -9,20 +9,14 @@ import java.net.Socket;
  * @author Jimena Leon Huertas
  */
 public class Client{
-    private static Interfaz ventana;
     private static Client instancia = null;
-    private final String HOST = "127.0.0.1";
-    private final int PUERTO = 5000;
-    private DataInputStream recibir;
-    private ObjectOutputStream enviar;
-    private Socket socket;
 
     /**
      * Inicializa la clase del Cliente e invoca la clase "interfaz" para crear la interfaz de la calculadora
      * @param args Un array de valores tipo String
      */
     public static void main(String[] args) {
-        ventana = new Interfaz();
+        Interfaz ventana = new Interfaz();
         }
 
     /**
@@ -32,6 +26,11 @@ public class Client{
      */
     public String mandarOperacion(Mensaje mensaje){
         String respuesta = "";
+        DataInputStream recibir;
+        ObjectOutputStream enviar;
+        Socket socket;
+        final String HOST = "127.0.0.1";
+        final int PUERTO = 5000;
 
         try {
             socket = new Socket(HOST, PUERTO);
